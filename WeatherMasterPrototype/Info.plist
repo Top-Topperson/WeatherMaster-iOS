@@ -1,0 +1,33 @@
+import Foundation
+
+@MainActor
+final class WeatherViewModel: ObservableObject {
+    @Published var currentWeather: WeatherData?
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+
+    private let weatherService = WeatherService()
+
+    func fetchWeather(for city: String) async {
+        let trimmed = city.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            errorMessage = "Please enter a city name."
+            return
+        }
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            let weather = try await weatherService.fetchWeather(for: trimmed)
+            currentWeather = weather
+        } catch let error as WeatherError {
+            errorMessage = error.localizedDescription
+        } catch {
+            errorMessage = "We could not load weather information right now."
+        }
+
+        isLoading = false
+    }
+}
+

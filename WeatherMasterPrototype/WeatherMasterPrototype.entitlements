@@ -1,0 +1,22 @@
+# Xcode
+DerivedData/
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# General
+.DS_Store
+
+# User-specific
+*.swp
+*.swo
+
+# Optional
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
